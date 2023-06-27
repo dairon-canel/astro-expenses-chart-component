@@ -1,34 +1,96 @@
 ---
-export interface Props {
-  class?: string;
+export type WeekDay = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
+
+export interface DayExpense {
+  day: WeekDay;
+  amount: number;
 }
 
-const { class: className } = Astro.props;
+export interface Props {
+  expensesObject: DayExpense[];
+  currentDay: WeekDay;
+  currentMonthExpenses: number;
+  class?: string;
+  balance?: number;
+  pastMonthExpenses?: number;
+}
+
+const {
+  balance,
+  class: className,
+  currentDay,
+  currentMonthExpenses,
+  expensesObject,
+  pastMonthExpenses,
+} = Astro.props;
+
+const totalChartHeight = 150;
+
+const getPercentageIncrease = (c: number, p: number) =>
+  (((c - p) / p) * 100).toFixed(1);
+
+const maxExpensesDay = Math.max(...expensesObject.map(e => e.amount));
+
+expensesObject.map(e => {
+  //percent respect to the max expenses day p/t = x/100
+  e.amount = (e.amount * 100) / maxExpensesDay;
+  //pixels respect to the max pixels set x/t = %/100
+  e.amount = Number(((e.amount * totalChartHeight) / 100).toFixed(1));
+  return e;
+});
 ---
 
 <section class:list={['expenses_chart_section', className]}>
-  <header class="expenses_chart_section__header">
-    <h2 class="expenses_chart_section__header_text">My balance</h2>
-    <p class="expenses_chart_section__header_balance">$921.48</p>
-  </header>
+  {
+    balance ? (
+      <header class="expenses_chart_section__header">
+        <h2 class="expenses_chart_section__header_text">My balance</h2>
+        <p class="expenses_chart_section__header_balance">{`$${balance}`}</p>
+      </header>
+    ) : null
+  }
+
   <div class="expenses_chart_section__chart_container">
     <h1 class="expenses_chart_section__chart_container_header">
       Spending - Last 7 days
     </h1>
-    <div class="expenses_chart_section__chart_container_chart">chart</div>
+    <div class="expenses_chart_section__chart_container_chart">
+      {
+        expensesObject.map(e => (
+          <div class="chart_slice">
+            <div
+              class:list={['chart_bar', { current_day: e.day === currentDay }]}
+              style={{ height: `${e.amount}px` }}
+            />
+            <p class="chart_label">{e.day}</p>
+          </div>
+        ))
+      }
+    </div>
     <footer class="expenses_chart_section__footer">
       <div class="expenses_chart_section__footer_this_month">
         <p class="expenses_chart_section__footer_this_month_text">
           Total this month
         </p>
-        <p class="expenses_chart_section__footer_this_month_expense">$478.33</p>
-      </div>
-      <div class="expenses_chart_section__footer_prev_month">
-        <p class="expenses_chart_section__footer_prev_month_expense">+2.4%</p>
-        <p class="expenses_chart_section__footer_prev_month_text">
-          from last month
+        <p class="expenses_chart_section__footer_this_month_expense">
+          {`$${currentMonthExpenses}`}
         </p>
       </div>
+      {
+        pastMonthExpenses ? (
+          <div class="expenses_chart_section__footer_prev_month">
+            <p class="expenses_chart_section__footer_prev_month_expense">
+              {`${getPercentageIncrease(
+                currentMonthExpenses,
+                pastMonthExpenses,
+              )}%`}
+            </p>
+            <p class="expenses_chart_section__footer_prev_month_text">
+              from last month
+            </p>
+          </div>
+        ) : null
+      }
     </footer>
   </div>
 </section>
@@ -84,6 +146,28 @@ const { class: className } = Astro.props;
   .expenses_chart_section__chart_container_chart {
     height: 235px;
     border-bottom: 2px solid var(--cream);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .chart_slice {
+    place-self: end;
+  }
+  .chart_bar {
+    background-color: var(--soft-red);
+    border-radius: 5px;
+  }
+
+  .current_day {
+    background-color: var(--cyan);
+  }
+  .chart_label {
+    min-width: 33px;
+    padding-bottom: 22px;
+    padding-top: 10px;
+    font-size: small;
+    text-align: center;
+    color: var(--dark-brown);
   }
 
   .expenses_chart_section__footer {
