@@ -36,7 +36,7 @@ const { class: className } = Astro.props;
 <style>
   .expenses_chart_section {
     align-self: top;
-    padding-top: 68px;
+    padding-top: 67px;
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -67,48 +67,68 @@ const { class: className } = Astro.props;
   }
 
   .expenses_chart_section__chart_container {
-    background-color: red;
+    background-color: var(--very-pale-orange);
+    border-radius: 10px;
     margin-top: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .expenses_chart_section__chart_container_header {
     padding-top: 21px;
     font-size: x-large;
-    color: var(--dark-brown);
+    color: var(--very-dark-brown);
     margin-bottom: 17px;
   }
 
   .expenses_chart_section__chart_container_chart {
-    background-color: blue;
     height: 235px;
+    border-bottom: 2px solid var(--cream);
   }
 
   .expenses_chart_section__footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 112px;
-    background-color: blueviolet;
   }
 
   .expenses_chart_section__footer_this_month {
-    background-color: chartreuse;
+    margin-top: 23px;
     place-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .expenses_chart_section__footer_this_month_text {
+    color: var(--dark-brown);
+    font-size: smaller;
+  }
+  .expenses_chart_section__footer_this_month_expense {
+    color: var(--very-dark-brown);
+    font-size: 30px;
+    font-weight: 700;
+    text-align: left;
   }
 
   .expenses_chart_section__footer_prev_month {
-    background-color: crimson;
     place-self: start end;
+    text-align: right;
+    margin-top: 47px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
   }
-  .expenses_chart_section__footer_this_month_text {
-    background-color: cyan;
-  }
-  .expenses_chart_section__footer_this_month_expense {
-    background-color: darkorange;
-  }
+
   .expenses_chart_section__footer_prev_month_expense {
-    background-color: darkslateblue;
+    color: var(--very-dark-brown);
+    font-size: medium;
+    font-weight: 700;
+    line-height: 18px;
   }
   .expenses_chart_section__footer_prev_month_text {
-    background-color: cornsilk;
+    line-height: 18px;
+    color: var(--dark-brown);
+    font-size: smaller;
   }
 </style>
