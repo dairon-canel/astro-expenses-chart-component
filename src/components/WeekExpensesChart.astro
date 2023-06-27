@@ -6,6 +6,10 @@ export interface DayExpense {
   amount: number;
 }
 
+interface FormattedDayExpense extends DayExpense {
+  visual: number;
+}
+
 export interface Props {
   expensesObject: DayExpense[];
   currentDay: WeekDay;
@@ -31,12 +35,15 @@ const getPercentageIncrease = (c: number, p?: number) =>
 
 const maxExpensesDay = Math.max(...expensesObject.map(e => e.amount));
 
-expensesObject.map(e => {
+const formattedExpensesObject: FormattedDayExpense[] = expensesObject.map(e => {
+  const formattedObject = { ...e, visual: 0 };
   //percent respect to the max expenses day p/t = x/100
-  e.amount = (e.amount * 100) / maxExpensesDay;
+  formattedObject.visual = (e.amount * 100) / maxExpensesDay;
   //pixels respect to the max pixels set x/t = %/100
-  e.amount = Number(((e.amount * totalChartHeight) / 100).toFixed(1));
-  return e;
+  formattedObject.visual = Number(
+    ((formattedObject.visual * totalChartHeight) / 100).toFixed(1),
+  );
+  return formattedObject;
 });
 
 const percentageIncrease = getPercentageIncrease(
@@ -59,12 +66,13 @@ const percentageIncrease = getPercentageIncrease(
     <h1 class="chart__chart_container__header">Spending - Last 7 days</h1>
     <div class="chart__chart_container__chart">
       {
-        expensesObject.map(e => (
-          <div class="chart_slice">
+        formattedExpensesObject.map(e => (
+          <div id={`unique_id_day_${e.day}`} class="chart_slice">
             <div
               class:list={['chart_bar', { current_day: e.day === currentDay }]}
-              style={{ height: `${e.amount}px` }}
+              style={{ height: `${e.visual}px` }}
             />
+            <span class="chart_amount">{`$${e.amount}`}</span>
             <p class="chart_label">{e.day}</p>
           </div>
         ))
@@ -141,10 +149,38 @@ const percentageIncrease = getPercentageIncrease(
 
   .chart_slice {
     place-self: end;
+    position: relative;
   }
+  .chart_amount {
+    position: absolute;
+    top: -30px;
+    left: -14px;
+    width: 75px;
+    height: 40px;
+    padding-top: 7px;
+    padding-left: 9px;
+    border-radius: 6px;
+    visibility: hidden;
+    color: var(--very-pale-orange);
+    transition: all ease 0.2s;
+  }
+
   .chart_bar {
     background-color: var(--soft-red);
     border-radius: 5px;
+    transition: all ease 0.2s;
+  }
+
+  .chart_bar:hover {
+    cursor: pointer;
+    opacity: 70%;
+  }
+
+  .chart_bar:hover + .chart_amount {
+    top: -50px;
+    background-color: var(--very-dark-brown);
+    color: var(--very-pale-orange);
+    visibility: visible;
   }
 
   .current_day {
