@@ -45,21 +45,19 @@ const percentageIncrease = getPercentageIncrease(
 );
 ---
 
-<section class:list={['expenses_chart_section', className]}>
+<section class:list={[className]}>
   {
     balance ? (
-      <header class="expenses_chart_section__header">
-        <h2 class="expenses_chart_section__header_text">My balance</h2>
-        <p class="expenses_chart_section__header_balance">{`$${balance}`}</p>
+      <header class="chart__header">
+        <h2 class="chart__header_text">My balance</h2>
+        <p class="chart__header_balance">{`$${balance}`}</p>
       </header>
     ) : null
   }
 
-  <div class="expenses_chart_section__chart_container">
-    <h1 class="expenses_chart_section__chart_container_header">
-      Spending - Last 7 days
-    </h1>
-    <div class="expenses_chart_section__chart_container_chart">
+  <div class="chart__chart_container">
+    <h1 class="chart__chart_container__header">Spending - Last 7 days</h1>
+    <div class="chart__chart_container__chart">
       {
         expensesObject.map(e => (
           <div class="chart_slice">
@@ -72,24 +70,20 @@ const percentageIncrease = getPercentageIncrease(
         ))
       }
     </div>
-    <footer class="expenses_chart_section__footer">
-      <div class="expenses_chart_section__footer_this_month">
-        <p class="expenses_chart_section__footer_this_month_text">
-          Total this month
-        </p>
-        <p class="expenses_chart_section__footer_this_month_expense">
+    <footer class="chart__footer">
+      <div class="chart__footer_this_month">
+        <p class="chart__footer_this_month__text">Total this month</p>
+        <p class="chart__footer_this_month__expense">
           {`$${currentMonthExpenses}`}
         </p>
       </div>
       {
         percentageIncrease ? (
-          <div class="expenses_chart_section__footer_prev_month">
-            <p class="expenses_chart_section__footer_prev_month_expense">
+          <div class="chart__footer_prev_month">
+            <p class="chart__footer_prev_month__expense">
               {`${percentageIncrease > 0 ? '+' : ''}${percentageIncrease}%`}
             </p>
-            <p class="expenses_chart_section__footer_prev_month_text">
-              from last month
-            </p>
+            <p class="chart__footer_prev_month__text">from last month</p>
           </div>
         ) : null
       }
@@ -98,14 +92,7 @@ const percentageIncrease = getPercentageIncrease(
 </section>
 
 <style>
-  .expenses_chart_section {
-    align-self: top;
-    padding-top: 67px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .expenses_chart_section__header {
+  .chart__header {
     background-image: url(/images/logo.svg);
     background-repeat: no-repeat;
     background-position: right 8.5% top 49%;
@@ -117,20 +104,20 @@ const percentageIncrease = getPercentageIncrease(
     height: 97px;
   }
 
-  .expenses_chart_section__header_text {
+  .chart__header_text {
     padding-top: 17px;
     font-size: medium;
     font-weight: 400;
     letter-spacing: -0.6px;
   }
 
-  .expenses_chart_section__header_balance {
+  .chart__header_balance {
     padding-top: 0.5px;
     font-size: x-large;
     font-weight: 700;
   }
 
-  .expenses_chart_section__chart_container {
+  .chart__chart_container {
     background-color: var(--very-pale-orange);
     border-radius: 10px;
     margin-top: 16px;
@@ -138,14 +125,14 @@ const percentageIncrease = getPercentageIncrease(
     padding-right: 20px;
   }
 
-  .expenses_chart_section__chart_container_header {
+  .chart__chart_container__header {
     padding-top: 21px;
     font-size: x-large;
     color: var(--very-dark-brown);
     margin-bottom: 17px;
   }
 
-  .expenses_chart_section__chart_container_chart {
+  .chart__chart_container__chart {
     height: 235px;
     border-bottom: 2px solid var(--cream);
     display: flex;
@@ -172,13 +159,13 @@ const percentageIncrease = getPercentageIncrease(
     color: var(--dark-brown);
   }
 
-  .expenses_chart_section__footer {
+  .chart__footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 112px;
   }
 
-  .expenses_chart_section__footer_this_month {
+  .chart__footer_this_month {
     margin-top: 23px;
     place-self: start;
     display: flex;
@@ -186,18 +173,18 @@ const percentageIncrease = getPercentageIncrease(
     gap: 1px;
   }
 
-  .expenses_chart_section__footer_this_month_text {
+  .chart__footer_this_month__text {
     color: var(--dark-brown);
     font-size: smaller;
   }
-  .expenses_chart_section__footer_this_month_expense {
+  .chart__footer_this_month__expense {
     color: var(--very-dark-brown);
     font-size: 30px;
     font-weight: 700;
     text-align: left;
   }
 
-  .expenses_chart_section__footer_prev_month {
+  .chart__footer_prev_month {
     place-self: start end;
     text-align: right;
     margin-top: 47px;
@@ -206,15 +193,52 @@ const percentageIncrease = getPercentageIncrease(
     gap: 3px;
   }
 
-  .expenses_chart_section__footer_prev_month_expense {
+  .chart__footer_prev_month__expense {
     color: var(--very-dark-brown);
     font-size: medium;
     font-weight: 700;
     line-height: 18px;
   }
-  .expenses_chart_section__footer_prev_month_text {
+  .chart__footer_prev_month__text {
     line-height: 18px;
     color: var(--dark-brown);
     font-size: smaller;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .chart__header {
+    }
+    .chart__header_text {
+    }
+    .chart__header_balance {
+    }
+    .chart__chart_container {
+    }
+    .chart__chart_container__header {
+    }
+    .chart__chart_container__chart {
+    }
+    .chart_slice {
+    }
+    .chart_bar {
+    }
+    .current_day {
+    }
+    .chart_label {
+    }
+    .chart__footer {
+    }
+    .chart__footer_this_month {
+    }
+    .chart__footer_this_month__text {
+    }
+    .chart__footer_this_month__expense {
+    }
+    .chart__footer_prev_month {
+    }
+    .chart__footer_prev_month__expense {
+    }
+    .chart__footer_prev_month__text {
+    }
   }
 </style>
