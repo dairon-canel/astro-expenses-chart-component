@@ -26,8 +26,8 @@ const {
 
 const totalChartHeight = 150;
 
-const getPercentageIncrease = (c: number, p: number) =>
-  (((c - p) / p) * 100).toFixed(1);
+const getPercentageIncrease = (c: number, p?: number) =>
+  p ? Number((((c - p) / p) * 100).toFixed(1)) : undefined;
 
 const maxExpensesDay = Math.max(...expensesObject.map(e => e.amount));
 
@@ -38,6 +38,11 @@ expensesObject.map(e => {
   e.amount = Number(((e.amount * totalChartHeight) / 100).toFixed(1));
   return e;
 });
+
+const percentageIncrease = getPercentageIncrease(
+  currentMonthExpenses,
+  pastMonthExpenses,
+);
 ---
 
 <section class:list={['expenses_chart_section', className]}>
@@ -77,13 +82,10 @@ expensesObject.map(e => {
         </p>
       </div>
       {
-        pastMonthExpenses ? (
+        percentageIncrease ? (
           <div class="expenses_chart_section__footer_prev_month">
             <p class="expenses_chart_section__footer_prev_month_expense">
-              {`${getPercentageIncrease(
-                currentMonthExpenses,
-                pastMonthExpenses,
-              )}%`}
+              {`${percentageIncrease > 0 ? '+' : ''}${percentageIncrease}%`}
             </p>
             <p class="expenses_chart_section__footer_prev_month_text">
               from last month
