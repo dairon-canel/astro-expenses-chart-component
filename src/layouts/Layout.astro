@@ -13,6 +13,13 @@ const { title } = Astro.props;
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -21,21 +28,86 @@ const { title } = Astro.props;
   </body>
 </html>
 <style is:global>
+  /* css reset from https://www.joshwcomeau.com/css/custom-css-reset/ */
+
+  /*
+  1. Use a more-intuitive box-sizing model.
+*/
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  /*
+  2. Remove default margin
+*/
+  * {
+    margin: 0;
+  }
+  /*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /*
+  5. Improve media defaults
+*/
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+  /*
+  6. Remove built-in form typography styles
+*/
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+  /*
+  7. Avoid text overflows
+*/
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+  /*
+  8. Create a root stacking context
+*/
+  #root,
+  #__next {
+    isolation: isolate;
+  }
+
   :root {
-    --accent: 124, 58, 237;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      #da62c4 30%,
-      white 60%
-    );
+    --soft-red: hsl(10, 79%, 65%);
+    --cyan: hsl(186, 34%, 60%);
+    --dark-brown: hsl(28, 10%, 53%);
+    --cream: hsl(27, 66%, 92%);
+    --very-pale-orange: hsl(33, 100%, 98%);
   }
   html {
-    font-family: system-ui, sans-serif;
-    background-color: #f6f6f6;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 18px;
   }
-  code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+
+  body {
+    background-color: var(--cream);
+    position: relative;
+    height: 100vh;
   }
 </style>

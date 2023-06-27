@@ -1,0 +1,114 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<section class:list={['expenses_chart_section', className]}>
+  <header class="expenses_chart_section__header">
+    <h2 class="expenses_chart_section__header_text">My balance</h2>
+    <p class="expenses_chart_section__header_balance">$921.48</p>
+  </header>
+  <div class="expenses_chart_section__chart_container">
+    <h1 class="expenses_chart_section__chart_container_header">
+      Spending - Last 7 days
+    </h1>
+    <div class="expenses_chart_section__chart_container_chart">chart</div>
+    <footer class="expenses_chart_section__footer">
+      <div class="expenses_chart_section__footer_this_month">
+        <p class="expenses_chart_section__footer_this_month_text">
+          Total this month
+        </p>
+        <p class="expenses_chart_section__footer_this_month_expense">$478.33</p>
+      </div>
+      <div class="expenses_chart_section__footer_prev_month">
+        <p class="expenses_chart_section__footer_prev_month_expense">+2.4%</p>
+        <p class="expenses_chart_section__footer_prev_month_text">
+          from last month
+        </p>
+      </div>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .expenses_chart_section {
+    align-self: top;
+    padding-top: 68px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .expenses_chart_section__header {
+    background-image: url(/images/logo.svg);
+    background-repeat: no-repeat;
+    background-position: right 8.5% top 49%;
+    background-size: 61px;
+    background-color: var(--soft-red);
+    border-radius: 10px;
+    color: var(--very-pale-orange);
+    padding-left: 20px;
+    height: 97px;
+  }
+
+  .expenses_chart_section__header_text {
+    padding-top: 17px;
+    font-size: medium;
+    font-weight: 400;
+    letter-spacing: -0.6px;
+  }
+
+  .expenses_chart_section__header_balance {
+    padding-top: 0.5px;
+    font-size: x-large;
+    font-weight: 700;
+  }
+
+  .expenses_chart_section__chart_container {
+    background-color: red;
+    margin-top: 16px;
+  }
+
+  .expenses_chart_section__chart_container_header {
+    padding-top: 21px;
+    font-size: x-large;
+    color: var(--dark-brown);
+    margin-bottom: 17px;
+  }
+
+  .expenses_chart_section__chart_container_chart {
+    background-color: blue;
+    height: 235px;
+  }
+
+  .expenses_chart_section__footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 112px;
+    background-color: blueviolet;
+  }
+
+  .expenses_chart_section__footer_this_month {
+    background-color: chartreuse;
+    place-self: start;
+  }
+
+  .expenses_chart_section__footer_prev_month {
+    background-color: crimson;
+    place-self: start end;
+  }
+  .expenses_chart_section__footer_this_month_text {
+    background-color: cyan;
+  }
+  .expenses_chart_section__footer_this_month_expense {
+    background-color: darkorange;
+  }
+  .expenses_chart_section__footer_prev_month_expense {
+    background-color: darkslateblue;
+  }
+  .expenses_chart_section__footer_prev_month_text {
+    background-color: cornsilk;
+  }
+</style>
