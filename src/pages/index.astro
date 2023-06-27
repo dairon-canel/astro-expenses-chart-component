@@ -1,11 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import WeekExpensesChart, {
-  DayExpense,
-} from '../components/WeekExpensesChart.astro';
+import WeekExpensesChart from '../components/WeekExpensesChart.astro';
 
 const url = Astro.url.origin;
-
 const response = await fetch(`${url}/data.json`);
 const data = await response.json();
 
@@ -18,7 +15,7 @@ const {
 } = data;
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Frontend Mentor | Expenses chart component">
   <main>
     <WeekExpensesChart
       balance={currentBalance}
